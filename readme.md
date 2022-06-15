@@ -180,7 +180,6 @@ def addentry(request):
     if request.method == 'POST':
         form = EntryForm(request.POST)
 
-
         if form.is_valid():
             new_entry = guestentry(entry_text=request.POST["entry_text"])
             new_entry.save()
@@ -193,14 +192,14 @@ def addentry(request):
     return render(request, 'guestbook/addentry.html',context=context)
 ```
 
-addentry.html
+index.html
 
 ```
-<form method="POST" action="{% url 'addentry' %}">
-      {% csrf_token %}
-      {{ form.as_p }}              
-      <button type="submit">Add Entry</button>
-</form>
+<ul>
+{% for e in entries %}
+<li>{{ e.entry_text }}</li>
+{% endfor %}
+</ul>
 ```
 
 ## View Entries: Bring everything together
